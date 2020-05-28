@@ -1,0 +1,15 @@
+[{
+    "party": "時代力量",
+    "tks": 1728,
+    "tksRate": 5.74,
+    "area": "同意",
+    "result": false,
+    "tboxRatio": 1.0
+}, {
+    "party": "時代力量",    
+    "tks": 443,
+    "tksRate": 3.5,
+    "area": "不同意",
+    "result": false,
+    "tboxRatio": 1.0
+}]
