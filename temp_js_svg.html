@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div>
+        <div class="grid-box1">
+            <!--同意票數-->
+            <div class="total_tks" style="background-color: #FFF9F4">
+                <p id="agree_title">目前同意票數</p>
+                <p id="agree_tks"></p>
+                <p id="agree_threshold">通過門檻：57萬4983</p>
+
+            </div>
+
+
+            <!--長條圖比較-->
+            <div class="bar_com" style="background-color: #FFF9F4">
+
+
+
+<!--
+                <div id="thr_line_text">
+                    <p>門檻</p>
+                </div>
+-->
+
+            </div>
+        </div>
+
+        <div class="grid-box2">
+            <!--門檻1-->
+            <div class="threshold_1" style="background-color: #FFF9F4">
+                <div>
+                    <p class="thr_title">門檻一</p>
+                    <p class="thr_text">票數超過<br>選舉人總數的25%<br>(57萬4983)</p>
+                </div>
+
+                <!--                <div>通過/沒通過</div>-->
+            </div>
+
+            <!--加號-->
+            <div class="plus" style="background-color: #FFF9F4">＋</div>
+
+            <!--門檻2-->
+            <div class="threshold_2" style="background-color: #FFF9F4">
+                <div>
+                    <p class="thr_title">門檻二</p>
+                    <p class="thr_text">同意票數<br>超過不同意票數</p>
+                </div>
+
+                <!--                <div>通過/沒通過</div>-->
+            </div>
+
+            <!--等於-->
+            <div class="and" style="background-color: #FFF9F4">＝</div>
+
+            <!--罷面是否通過-->
+            <div class="result" style="background-color: #FFF9F4">
+
+                <div>
+                    <p class="thr_title">罷免結果</p>
+                </div>
+                <!--                <div>通過/沒通過</div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        //取頁面寬度
+        var width = Math.max(document.body.scrollHeight, document.body.offsetWidth);
+        console.log(width);
+        
+        //D3
+        d3.json("running_all.json", function(data) {
+
+            console.log(data);
+
+            //同意票總數
+            d3.select('#agree_tks')
+                .selectAll()
+                .data(data)
+                .enter()
+                .append("p")
+                //                .attr('id', 'agree_tks')
+                .text(d => (Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000)))
+
+
+
+            //長條圖
+              d3.select('.bar_com')
+                .selectAll()
+                .data(data)
+                .enter()
+                .append("svg")
+                .attr('id', 'svg')
+                .style('width', '250px')
+                .style('height', '150px')
+                .append('text')
+                .text('同意')
+                .attr('id','agree')
+                .attr('x', '20')
+                .attr('y', '50');
+            
+            d3.select('#svg')
+                .selectAll()
+                .data(data)
+                .enter()
+                .append('text')
+                .text('不同意')
+                .attr('id','disagree')
+                .attr('x', '4')
+                .attr('y', '80');
+            
+            d3.select('#svg')
+                .selectAll('rect')
+                .data(data)
+                .enter()
+                .append('rect')
+                .style('fill', '#EA8C55')
+                .attr('height', '20')
+                .attr('width', d => (d.agreeTks / 5000000 * width) )
+                .attr('x', '56')
+                .attr('y', '34');
+            
+            d3.select('#svg')
+                .data(data)
+                .enter()
+                .append('rect')
+                .style('fill', '#036EB7')
+                .attr('height', '20')
+                .attr('width', d => (d.disagreeTks / 5000000 * width) )
+                .attr('x', '56')
+                .attr('y', '64');
+
+        });
+    </script>
+
+    <style>
+        /*   用grid排整體版面  */
+        .grid-box1 {
+            display: grid;
+            /*設定 Grid 的寬度*/
+            grid-template-columns: 300px 300px;
+            /*設定 Grid 的長度*/
+            /*grid-template-rows: 100px 100px;*/
+            /* 設定左右間距 */
+            grid-column-gap: 0px;
+            /* 設定上下間距 */
+            /*            grid-row-gap: 100px;*/
+        }
+
+        .grid-box2 {
+            display: grid;
+            /*設定 Grid 的寬度*/
+            grid-template-columns: 160px 60px 160px 60px 160px;
+            /*設定 Grid 的長度*/
+            /*            grid-template-rows: 120px 120px 120px;*/
+            /* 設定左右間距 */
+            grid-column-gap: 0px;
+            /* 設定上下間距 */
+            /*            grid-row-gap: 20px;*/
+        }
+
+        /* div格式 */
+        .threshold_1,
+        .threshold_2,
+        .result,
+        .plus,
+        .and{
+            border-top-style: solid;
+            border-top-width: 1px;
+            border-top-color: #CACACA;
+
+        }
+
+
+        #thr_line {
+            width: 80%;
+            border-right-style: dashed;
+            border-right-width: 1px;
+
+        }
+
+        /*  bar格式   */
+
+        .flex {
+            display: flex;
+
+        }
+
+        .bar_text {
+            margin-right: 10px;
+        }
+
+        #agree_bar {
+            background-color: #EA8C55;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        #disagree_bar {
+            background-color: #036EB7;
+            width: 30%;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+
+        /*  文字格式    */
+        .total_tks p {
+            line-height: 10px;
+            text-align: center;
+            margin-left: 4%;
+            margin-right: 4%;
+        }
+
+        #agree_title {
+            font-size: 24px;
+            font-weight: 300;
+            margin-top: 30px;
+            margin-bottom: -5px;
+        }
+
+        #agree_tks p {
+            font-size: 50px;
+            font-weight: 600;
+            margin-top: 46px;
+            margin-bottom: 30px;
+        }
+
+        #agree_threshold {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 20px;
+
+        }
+
+        #thr_line_text {
+            text-align: right;
+            width: 86%;
+            margin-top: -10px;
+        }
+
+        .threshold_1 p {
+            text-align: center;
+            margin-left: 4%;
+            margin-right: 4%;
+        }
+
+        .threshold_2 p {
+            text-align: center;
+            margin-left: 4%;
+            margin-right: 4%;
+        }
+
+        .thr_title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: -10px;
+        }
+
+
+        .thr_text {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 300;
+        }
+
+        .result p {
+            text-align: center;
+            margin-left: 4%;
+            margin-right: 4%;
+        }
+
+        .plus,
+        .and {
+            /*  上下左右置中  */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+
+        }
+    </style>
+
+</body>
+
+</html>
