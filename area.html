@@ -94,47 +94,51 @@
         console.log(width);
 
         d3.json("running_area.json", function(data) {
-        //     d3.json(url, function(data) {
-        console.log(data);
+            //     d3.json(url, function(data) {
+            console.log(data);
 
-        //d3表格
-        d3.select('.ks_area')
-        .selectAll()
-        .data(data)
-        .enter()
-        .append("div")
-        .attr('class', 'block')
-        .append("p")
-        .attr('class', 'name')
-        .text(d => (d.deptName))
-        .append("p")
-        .attr('class', 'area')
-        .text("同意票數")
-        .append("p")
-        .attr('class', 'tksRate')
-        .text(d => (Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000)))
-        .append("p")
-        .attr('class', 'area2')
-        .text("不同意票數")
-        .append("p")
-        .attr('class', 'tksRate')
-        .text(d => (Math.floor(d.disagreeTks / 10000) + "萬" + (d.disagreeTks - Math.floor(d.disagreeTks / 10000) * 10000)))
-        .append("p")
-        .attr('class', 'area3')
-        .text("投票率")
-        .append("p")
-        .attr('class', 'tksRate')
-        .text(d => (d.profRate + "%"))    
-            
-//        .append("p")
-//        .attr('class', 'result')
-//        .text(d => (d.result == true ? '當選' :
-//            d.result == false ? '' :
-//            ''))
-//        .style('color', d => (d.result == true ? '#ffffff' :
-//            "#ffffff"))
-//        .style('background-color', d => (d.result == true ? '#d9294b' :
-//            "#ffffff"))
+            //d3表格
+            d3.select('.ks_area')
+                .selectAll()
+                .data(data
+                    .sort(function(a, b) {
+                        return d3.descending(a.profRate, b.profRate)
+                    })
+                )
+                .enter()
+                .append("div")
+                .attr('class', 'block')
+                .append("p")
+                .attr('class', 'name')
+                .text(d => (d.deptName))
+                .append("p")
+                .attr('class', 'area')
+                .text("同意票數")
+                .append("p")
+                .attr('class', 'tksRate')
+                .text(d => (Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000)))
+                .append("p")
+                .attr('class', 'area2')
+                .text("不同意票數")
+                .append("p")
+                .attr('class', 'tksRate')
+                .text(d => (Math.floor(d.disagreeTks / 10000) + "萬" + (d.disagreeTks - Math.floor(d.disagreeTks / 10000) * 10000)))
+                .append("p")
+                .attr('class', 'area3')
+                .text("投票率")
+                .append("p")
+                .attr('class', 'tksRate')
+                .text(d => (d.profRate + "%"))
+
+            //        .append("p")
+            //        .attr('class', 'result')
+            //        .text(d => (d.result == true ? '當選' :
+            //            d.result == false ? '' :
+            //            ''))
+            //        .style('color', d => (d.result == true ? '#ffffff' :
+            //            "#ffffff"))
+            //        .style('background-color', d => (d.result == true ? '#d9294b' :
+            //            "#ffffff"))
 
         });
     </script>
@@ -166,10 +170,10 @@
             margin-top: 2px;
 
         }
-        
+
         .area,
         .area2,
-        .area3{
+        .area3 {
             font-size: 14px;
             font-weight: 300;
             margin-top: 2px;
@@ -199,7 +203,6 @@
 
             border-top: solid 2px #f9bd2c;
         }
-        
     </style>
 
     <script>
