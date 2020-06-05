@@ -7,10 +7,10 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
         //reload
-        //    function myrefresh(){
-        //        window.location.reload();
-        //    }
-        //        setTimeout('myrefresh()',25000)//設定reload秒數(毫秒)
+        function myrefresh() {
+            window.location.reload();
+        }
+        setTimeout('myrefresh()', 25000) //設定reload秒數(毫秒)
     </script>
     <!--   傳高度資訊給主網站，高度跟著主網才能RWD-->
     <!--
@@ -51,11 +51,15 @@
 <body onload="getnewtime()" style="font-family: sans-serif">
 
     <!--    <p id="title">各區罷免開票資訊</p>-->
-    <!--<p style="margin: 0px 0px -10px 0px;">更新時間<span id="r_time"></span></p>-->
     <h3>各區罷免開票資訊</h3>
-    <p class="subtitle"><span>依投票率排列</span></p>
-    <div class="ks_area"></div>
 
+    <p style="margin: -18px 0px 20px 1px;font-size: 12px;">更新時間<span id="r_time"></span></p>
+
+    <p class="subtitle"><span>依投票率排列</span>
+    </p>
+
+    <div class="ks_area"></div>
+    <p style="font-size:10px;margin-top:0px;">資料來源：高雄市選委會</p>
 
 
     <style>
@@ -78,9 +82,8 @@
         }
     </style>
 
-
     <script>
-        var url = '/election_online_2018/member_result.json?ts=' + (new Date()).getTime();
+        var url = 'https://iflin.github.io/ks_data_test/running_area.json?ts=' + (new Date()).getTime();
 
         //抓更新時間        
         function getnewtime() {
@@ -93,8 +96,10 @@
         var width = Math.max(document.body.scrollHeight, document.body.offsetWidth);
         console.log(width);
 
-        d3.json("running_area.json", function(data) {
-            //     d3.json(url, function(data) {
+        //        d3.json("running_area.json", function(data) {
+
+        d3.json(url, function(data) {
+
             console.log(data);
 
             //d3表格
@@ -108,37 +113,42 @@
                 .enter()
                 .append("div")
                 .attr('class', 'block')
+
                 .append("p")
                 .attr('class', 'name')
                 .text(d => (d.deptName))
+
                 .append("p")
                 .attr('class', 'area')
                 .text("同意票數")
+
                 .append("p")
                 .attr('class', 'tksRate')
-                .text(d => (Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000)))
+                .text(
+                    d => d.agreeTks > 10000 ? Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000) :
+                    d.agreeTks < 10000 ? d.agreeTks : d.agreeTks
+                )
+
                 .append("p")
                 .attr('class', 'area2')
                 .text("不同意票數")
+
                 .append("p")
                 .attr('class', 'tksRate')
-                .text(d => (Math.floor(d.disagreeTks / 10000) + "萬" + (d.disagreeTks - Math.floor(d.disagreeTks / 10000) * 10000)))
+                .text(
+                    d => d.disagreeTks > 10000 ? Math.floor(d.disagreeTks / 10000) + "萬" + (d.disagreeTks - Math.floor(d.disagreeTks / 10000) * 10000) :
+                    d.disagreeTks < 10000 ? d.disagreeTks : d.disagreeTks
+                )
+
                 .append("p")
                 .attr('class', 'area3')
                 .text("投票率")
+
                 .append("p")
                 .attr('class', 'tksRate')
-                .text(d => (d.profRate + "%"))
+                .text(d => (d.profRate + "%"));
 
-            //        .append("p")
-            //        .attr('class', 'result')
-            //        .text(d => (d.result == true ? '當選' :
-            //            d.result == false ? '' :
-            //            ''))
-            //        .style('color', d => (d.result == true ? '#ffffff' :
-            //            "#ffffff"))
-            //        .style('background-color', d => (d.result == true ? '#d9294b' :
-            //            "#ffffff"))
+
 
         });
     </script>
@@ -201,7 +211,7 @@
 
         .area {
 
-            border-top: solid 2px #f9bd2c;
+            border-top: solid 2px #F7717D;
         }
     </style>
 
