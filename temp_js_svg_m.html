@@ -15,9 +15,9 @@
 
 </head>
 
-<body onload="getnewtime()" style="font-family: sans-serif" >
+<body onload="getnewtime()" style="font-family: sans-serif">
 
-    <div >
+    <div>
         <div class="grid-box1">
             <!--同意票數-->
             <div class="total_tks" style="background-color: #FFFFFF">
@@ -72,7 +72,7 @@
             </div>
 
             <!--等於-->
-            <div class="and" style="background-color: #FFF9F4">∥</div>
+            <div class="and" style="background-color: #FFF9F4">||</div>
 
             <!--罷面是否通過-->
             <div class="result" style="background-color: #FFF9F4">
@@ -83,8 +83,8 @@
                 <!--                <div>通過/沒通過</div>-->
 
             </div>
-            
-                    <p style="font-size:10px; font-weight: 300;;margin-top:30px;text-align: center;">資料來源：高雄市選委會</p>
+
+            <p style="font-size:10px; font-weight: 300;;margin-top:30px;text-align: center;">資料來源：高雄市選委會</p>
 
         </div>
 
@@ -219,12 +219,12 @@
     <style>
         /*   用grid排整體版面  */
         .grid-box1 {
-            width:80%;
+            width: 80%;
             align-content: center;
         }
 
         .grid-box2 {
-            width:80%;
+            width: 80%;
             align-content: center;
 
         }
@@ -348,6 +348,38 @@
 
         }
     </style>
+
+    <script>
+        function sendMessage() {
+            //取整個頁面的元素
+            var html = document.documentElement;
+            //取出頁面的高度
+            var height = Math.max(html.scrollHeight, html.offsetHeight);
+
+            var src = window.location.href;
+
+            var data = {
+                height: height,
+                src: src,
+            };
+
+            var parent_url = (window.location != window.parent.location) ? document.referrer : document.location.href;
+
+            var parent_url_array = parent_url.split("/");
+
+            //將高度資訊轉成JSON格式，傳回給主網站。
+            var origin = parent_url_array[0] + "//" + parent_url_array[2];
+
+            //console.log(data, origin);
+
+            window.parent.postMessage(JSON.stringify(data), origin);
+        }
+
+        window.addEventListener('resize', sendMessage, false);
+
+        sendMessage();
+    </script>
+
 
 </body>
 
