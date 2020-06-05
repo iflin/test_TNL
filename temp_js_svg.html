@@ -34,6 +34,7 @@
 
             <!--長條圖比較-->
             <div class="bar_com" style="background-color: #FFF9F4">
+                <svg id=svg></svg>
 
 
 
@@ -64,7 +65,7 @@
             <div class="threshold_2" style="background-color: #FFF9F4">
                 <div>
                     <p class="thr_title">門檻二</p>
-                    <p class="thr_text">同意票數超過<br>選舉人總數的25%<br>(57萬4983)</p>
+                    <p class="thr_text">同意票數超過<br>選舉人總數的25%<br>(57萬4996)</p>
                 </div>
 
                 <!--                <div>通過/沒通過</div>-->
@@ -82,11 +83,13 @@
                 <!--                <div>通過/沒通過</div>-->
 
             </div>
+
         </div>
+        <p style="font-size:10px;margin-top:0px;">資料來源：高雄市選委會</p>
     </div>
 
     <script>
-                var url = '/election_online_2018/member_result.json?ts=' + (new Date()).getTime();
+        var url = 'https://iflin.github.io/ks_data_test/running_all.json?ts=' + (new Date()).getTime();
 
         //抓更新時間        
         function getnewtime() {
@@ -94,14 +97,16 @@
             var h = d.toLocaleTimeString();
             document.getElementById("r_time").innerHTML = h;
         }
-        
-        
+
+
         //取頁面寬度
         var width = Math.max(document.body.scrollHeight, document.body.offsetWidth);
         console.log(width);
 
         //D3
-        d3.json("running_all.json", function(data) {
+        d3.json(url, function(data) {
+
+            //                    d3.json("running_all.json", function(data) {
 
             console.log(data);
 
@@ -111,61 +116,100 @@
                 .data(data)
                 .enter()
                 .append("p")
-                //                .attr('id', 'agree_tks')
-                .text(d => (Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000)))
+                .text(
+                    d => d.agreeTks > 10000 ? Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000) :
+                    d.agreeTks < 10000 ? d.agreeTks : d.agreeTks
+                )
 
+                .transition()
+                .duration(2500)
+                .tween('number', function(d) {
+                    var node = this; //將this保留為node來操控
+                    var i = d3.interpolateRound(0, d.agreeTks);
+                    return function(t) {
+                        node.textContent = i(t); //利用html的DOM操控
+                        // node.style.fill=c(t)
+                    };
+                });
+        })
 
+        d3.json("https://iflin.github.io/ks_data_test/running_all_bar.json", function(data) {
 
             //長條圖
-            d3.select('.bar_com')
-                .selectAll()
-                .data(data)
-                .enter()
-                .append("svg")
-                .attr('id', 'svg')
-                .style('width', '250px')
-                .style('height', '150px')
-                .append('text')
-                .text('同意')
-                .attr('id', 'agree')
-                .attr('x', '20')
-                .attr('y', '50');
-
             d3.select('#svg')
                 .selectAll()
                 .data(data)
                 .enter()
+                //                .append("svg")
+                //                .attr('id', 'svg')
+                //                .style('width', '250px')
+                //                .style('height', '150px')
                 .append('text')
-                .text('不同意')
-                .attr('id', 'disagree')
-                .attr('x', '4')
-                .attr('y', '80');
+                .text(d => d.choice)
+                .attr('class', 'choice')
+                .attr('x', '20')
+                .attr('y', d => 60 + 50 * (d.no - 1));
+
+            //            d3.select('#svg')
+            //                .selectAll()
+            //                .data(data)
+            //                .enter()
+            //                .append('text')
+            //                .text('不同意')
+            //                .attr('id', 'disagree')
+            //                .attr('x', '4')
+            //                .attr('y', '80');
 
             d3.select('#svg')
                 .selectAll('rect')
                 .data(data)
                 .enter()
                 .append('rect')
-                .style('fill', '#F7717D')
-                .attr('height', '20')
-                .attr('width', d => (d.agreeTks / 5000000 * width))
-                .attr('x', '56')
-                .attr('y', '34');
+                .style('fill', d => d.color)
+                .attr('height', '40')
+                .attr('x', '74')
+                .attr('y', d => 33 + 50 * (d.no - 1))
+                .transition()
+                .duration(2500)
+                .attr('width', d => (d.tks / 5000000 * width));
 
             d3.select('#svg')
+                .selectAll()
                 .data(data)
                 .enter()
-                .append('rect')
-                .style('fill', '#49BAE5')
-                .attr('height', '20')
-                .attr('width', d => (d.disagreeTks / 5000000 * width))
-                .attr('x', '56')
-                .attr('y', '64');
-            
+                //                .append("svg")
+                //                .attr('id', 'svg')
+                //                .style('width', '250px')
+                //                .style('height', '150px')
+                .append('text')
+                .text(d => d.tks)
+                .attr('class', 'tks')
+                .attr('x', '76')
+                .attr('y', d => 60 + 50 * (d.no - 1))
+                .transition()
+                .duration(2500)
+                .attr('x', d => (d.tks / 5000000 * width + 82))
+                .tween('number', function(d) {
+                    var node = this; //將this保留為node來操控
+                    var i = d3.interpolateRound(0, d.tks);
+                    return function(t) {
+                        node.textContent = i(t); //利用html的DOM操控
+                        // node.style.fill=c(t)
+                    };
+                });
+
+            //            d3.select('#svg')
+            //                .data(data)
+            //                .enter()
+            //                .append('rect')
+            //                .style('fill', '#49BAE5')
+            //                .attr('height', '20')
+            //                .attr('width', d => (d.disagreeTks / 5000000 * width))
+            //                .attr('x', '56')
+            //                .attr('y', '64');
+
             //門檻是否通過的
-            
-            
-            
+
 
         });
     </script>
