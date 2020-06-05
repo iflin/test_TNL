@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <title>Untitled Document</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-
+    <script>
+        //reload
+        function myrefresh() {
+            window.location.reload();
+        }
+        setTimeout('myrefresh()', 25000) //設定reload秒數(毫秒)
+    </script>
 
 </head>
 
-<body>
+<body onload="getnewtime()" style="font-family: sans-serif">
 
     <div>
         <div class="grid-box1">
@@ -17,7 +23,11 @@
             <div class="total_tks" style="background-color: #FFF9F4">
                 <p id="agree_title">目前同意票數</p>
                 <p id="agree_tks"></p>
-                <p id="agree_threshold">通過門檻：57萬4983</p>
+
+
+                <!-- <p id="agree_threshold">通過門檻：57萬4983</p>-->
+
+                <p id="agree_threshold" style="margin: 0px 0px -10px 0px;">更新時間<span id="r_time"></span></p>
 
             </div>
 
@@ -27,7 +37,7 @@
 
 
 
-<!--
+                <!--
                 <div id="thr_line_text">
                     <p>門檻</p>
                 </div>
@@ -41,7 +51,7 @@
             <div class="threshold_1" style="background-color: #FFF9F4">
                 <div>
                     <p class="thr_title">門檻一</p>
-                    <p class="thr_text">票數超過<br>選舉人總數的25%<br>(57萬4983)</p>
+                    <p class="thr_text">同意票數<br>超過不同意票數</p>
                 </div>
 
                 <!--                <div>通過/沒通過</div>-->
@@ -54,7 +64,7 @@
             <div class="threshold_2" style="background-color: #FFF9F4">
                 <div>
                     <p class="thr_title">門檻二</p>
-                    <p class="thr_text">同意票數<br>超過不同意票數</p>
+                    <p class="thr_text">同意票數超過<br>選舉人總數的25%<br>(57萬4983)</p>
                 </div>
 
                 <!--                <div>通過/沒通過</div>-->
@@ -76,11 +86,20 @@
     </div>
 
     <script>
+                var url = '/election_online_2018/member_result.json?ts=' + (new Date()).getTime();
+
+        //抓更新時間        
+        function getnewtime() {
+            var d = new Date();
+            var h = d.toLocaleTimeString();
+            document.getElementById("r_time").innerHTML = h;
+        }
+        
         
         //取頁面寬度
         var width = Math.max(document.body.scrollHeight, document.body.offsetWidth);
         console.log(width);
-        
+
         //D3
         d3.json("running_all.json", function(data) {
 
@@ -98,7 +117,7 @@
 
 
             //長條圖
-              d3.select('.bar_com')
+            d3.select('.bar_com')
                 .selectAll()
                 .data(data)
                 .enter()
@@ -108,40 +127,45 @@
                 .style('height', '150px')
                 .append('text')
                 .text('同意')
-                .attr('id','agree')
+                .attr('id', 'agree')
                 .attr('x', '20')
                 .attr('y', '50');
-            
+
             d3.select('#svg')
                 .selectAll()
                 .data(data)
                 .enter()
                 .append('text')
                 .text('不同意')
-                .attr('id','disagree')
+                .attr('id', 'disagree')
                 .attr('x', '4')
                 .attr('y', '80');
-            
+
             d3.select('#svg')
                 .selectAll('rect')
                 .data(data)
                 .enter()
                 .append('rect')
-                .style('fill', '#EA8C55')
+                .style('fill', '#F7717D')
                 .attr('height', '20')
-                .attr('width', d => (d.agreeTks / 5000000 * width) )
+                .attr('width', d => (d.agreeTks / 5000000 * width))
                 .attr('x', '56')
                 .attr('y', '34');
-            
+
             d3.select('#svg')
                 .data(data)
                 .enter()
                 .append('rect')
-                .style('fill', '#036EB7')
+                .style('fill', '#49BAE5')
                 .attr('height', '20')
-                .attr('width', d => (d.disagreeTks / 5000000 * width) )
+                .attr('width', d => (d.disagreeTks / 5000000 * width))
                 .attr('x', '56')
                 .attr('y', '64');
+            
+            //門檻是否通過的
+            
+            
+            
 
         });
     </script>
@@ -177,7 +201,7 @@
         .threshold_2,
         .result,
         .plus,
-        .and{
+        .and {
             border-top-style: solid;
             border-top-width: 1px;
             border-top-color: #CACACA;
@@ -203,6 +227,7 @@
             margin-right: 10px;
         }
 
+        /*
         #agree_bar {
             background-color: #EA8C55;
             margin-top: 15px;
@@ -215,6 +240,7 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+*/
 
 
         /*  文字格式    */
