@@ -105,9 +105,9 @@
         console.log(width);
 
         //D3
-        d3.json(url, function(data) {
+//        d3.json(url, function(data) {
 
-            //                    d3.json("running_all.json", function(data) {
+                                d3.json("running_all.json", function(data) {
 
             console.log(data);
 
@@ -134,8 +134,10 @@
                 });
         })
 
-        d3.json("https://iflin.github.io/ks_data/running_all_bar.json", function(data) {
+//        d3.json("https://iflin.github.io/ks_data/running_all_bar.json", function(data) {
+        d3.json("running_all_bar.json", function(data) {
 
+        
             //長條圖
             d3.select('#svg')
                 .selectAll()
@@ -185,11 +187,11 @@
                 .append('text')
                 .text(d => d.tks)
                 .attr('class', 'tks')
-                .attr('x', '90')
+                .attr('x', '94')
                 .attr('y', d => 60 + 50 * (d.no - 1))
                 .transition()
                 .duration(2500)
-                .attr('x', d => (d.tks / 5000000 * width + 96))
+//                .attr('x', d => (d.tks / 5000000 * width + 96))
                 .tween('number', function(d) {
                     var node = this; //將this保留為node來操控
                     var i = d3.interpolateRound(0, d.tks);
@@ -221,7 +223,7 @@
         .grid-box1 {
             display: grid;
             /*設定 Grid 的寬度*/
-            grid-template-columns: 300px 300px;
+            grid-template-columns: 60% 40%;
             /*設定 Grid 的長度*/
             /*grid-template-rows: 100px 100px;*/
             /* 設定左右間距 */
@@ -233,7 +235,7 @@
         .grid-box2 {
             display: grid;
             /*設定 Grid 的寬度*/
-            grid-template-columns: 160px 60px 160px 60px 160px;
+            grid-template-columns: 26.67% 10% 26.67% 10% 26.67%;
             /*設定 Grid 的長度*/
             /*            grid-template-rows: 120px 120px 120px;*/
             /* 設定左右間距 */
