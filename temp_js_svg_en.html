@@ -11,7 +11,6 @@
             window.location.reload();
         }
         setTimeout('myrefresh()', 25000) //設定reload秒數(毫秒)
-
     </script>
 
 </head>
@@ -107,7 +106,7 @@
         //D3
         d3.json(url, function(data) {
 
-//                                d3.json("running_all.json", function(data) {
+            //                                d3.json("running_all.json", function(data) {
 
             console.log(data);
 
@@ -135,9 +134,9 @@
         })
 
         d3.json("https://iflin.github.io/ks_data/running_all_bar.json", function(data) {
-//        d3.json("running_all_bar.json", function(data) {
+            //        d3.json("running_all_bar.json", function(data) {
 
-        
+
             //長條圖
             d3.select('#svg')
                 .selectAll()
@@ -187,11 +186,12 @@
                 .append('text')
                 .text(d => d.tks)
                 .attr('class', 'tks')
+                .style('font-size', '14px')
                 .attr('x', '94')
                 .attr('y', d => 60 + 50 * (d.no - 1))
                 .transition()
                 .duration(2500)
-//                .attr('x', d => (d.tks / 5000000 * width + 96))
+                //                .attr('x', d => (d.tks / 5000000 * width + 96))
                 .tween('number', function(d) {
                     var node = this; //將this保留為node來操控
                     var i = d3.interpolateRound(0, d.tks);
@@ -211,7 +211,7 @@
             //                .attr('x', '56')
             //                .attr('y', '64');
 
-                        //門檻線
+            //門檻線
 
             var line = d3.line();
 
@@ -234,7 +234,7 @@
                 .attr('fill', '#313131')
                 .style('font-size', '14px')
 
-                                    d3.select('#svg')
+            d3.select('#svg')
                 .append("path")
                 .attr("d", line([
                     [90, 30],
@@ -247,7 +247,6 @@
 
 
         });
-
     </script>
 
     <style>
@@ -399,7 +398,6 @@
             font-size: 40px;
 
         }
-
     </style>
 
     <script>
@@ -431,7 +429,6 @@
         window.addEventListener('resize', sendMessage, false);
 
         sendMessage();
-
     </script>
 
 
