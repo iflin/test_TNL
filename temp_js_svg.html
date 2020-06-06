@@ -91,6 +91,9 @@
 
     <script>
         var url = 'https://iflin.github.io/ks_data/running_all.json?ts=' + (new Date()).getTime();
+        
+        
+        var url_1 = "https://iflin.github.io/ks_data/running_all_bar.json?ts="+ (new Date()).getTime();
 
         //抓更新時間        
         function getnewtime() {
@@ -138,7 +141,7 @@
 
         //長條圖
 
-        d3.json("https://iflin.github.io/ks_data/running_all_bar.json", function(data) {
+        d3.json(url_1, function(data) {
 
 
             d3.select('#svg')
