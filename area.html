@@ -10,7 +10,7 @@
         function myrefresh() {
             window.location.reload();
         }
-        setTimeout('myrefresh()', 25000) //設定reload秒數(毫秒)
+        setTimeout('myrefresh()', 60000) //設定reload秒數(毫秒)
     </script>
     <!--   傳高度資訊給主網站，高度跟著主網才能RWD-->
     <!--
@@ -82,8 +82,9 @@
         }
     </style>
 
+
     <script>
-        var url = 'https://iflin.github.io/ks_data_test/running_area.json?ts=' + (new Date()).getTime();
+        var url = 'https://iflin.github.io/ks_data/running_area.json?ts=' + (new Date()).getTime();
 
         //抓更新時間        
         function getnewtime() {
