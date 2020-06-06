@@ -186,11 +186,12 @@
                 .append('text')
                 .text(d => d.tks)
                 .attr('class', 'tks')
-                .attr('x', '76')
+                .attr('x', '78')
                 .attr('y', d => 60 + 50 * (d.no - 1))
+                .style('font-size', '14px')    
                 .transition()
                 .duration(2500)
-                .attr('x', d => (d.tks / 5000000 * width + 82))
+//                .attr('x', d => (d.tks / 5000000 * width + 82))
                 .tween('number', function(d) {
                     var node = this; //將this保留為node來操控
                     var i = d3.interpolateRound(0, d.tks);
@@ -210,7 +211,29 @@
             //                .attr('x', '56')
             //                .attr('y', '64');
 
-            //門檻是否通過的
+                        //門檻線
+
+            var line = d3.line();
+
+            d3.select('#svg')
+                .append("path")
+                .attr("d", line([
+                    [(574996 / 5000000 * width + 74), 30],
+                    [(574996 / 5000000 * width + 74), 126]
+                ]))
+                .attr("stroke", "black")
+                .attr("stroke-dasharray", "5,5")
+                .attr("stroke-width", "1px")
+                .attr("fill", "none");
+
+            d3.select('#svg')
+                .append("text")
+                .text("57萬4996")
+                .attr('x', [574996 / 5000000 * width + 40])
+                .attr('y', '142')
+                .attr('fill', '#313131')
+                .style('font-size', '14px')
+
 
 
         });
