@@ -15,7 +15,7 @@
 
 </head>
 
-<body onload="getnewtime()" style="font-family: sans-serif">
+<body onload="getnewtime()" style="font-family: sans-serif; width: 100%;">
 
     <div style="background-color: #FFFFFF">
         <div class="grid-box1">
@@ -193,7 +193,7 @@
                 .attr('y', d => 60 + 50 * (d.no - 1))
                 .transition()
                 .duration(2500)
-                .attr('x', d => (d.tks / 5000000 * width + 82))
+//                .attr('x', d => (d.tks / 5000000 * width + 82))
                 .tween('number', function(d) {
                     var node = this; //將this保留為node來操控
                     var i = d3.interpolateRound(0, d.tks);
@@ -237,7 +237,7 @@
         .grid-box1 {
             display: grid;
             /*設定 Grid 的寬度*/
-            grid-template-columns: 300px 300px;
+            grid-template-columns: 50% 50%;
             /*設定 Grid 的長度*/
             /*grid-template-rows: 100px 100px;*/
             /* 設定左右間距 */
@@ -249,7 +249,7 @@
         .grid-box2 {
             display: grid;
             /*設定 Grid 的寬度*/
-            grid-template-columns: 160px 60px 160px 60px 160px;
+            grid-template-columns: 26.67% 10% 26.67% 10% 26.67%;
             /*設定 Grid 的長度*/
             /*            grid-template-rows: 120px 120px 120px;*/
             /* 設定左右間距 */
