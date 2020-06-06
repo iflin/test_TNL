@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <title>2020高雄市長各區罷免</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script>
+<!--     <script>
         //reload
         function myrefresh() {
             window.location.reload();
         }
         setTimeout('myrefresh()', 60000) //設定reload秒數(毫秒)
-    </script>
+    </script> -->
     <!--   傳高度資訊給主網站，高度跟著主網才能RWD-->
     <!--
     <script>
@@ -55,7 +55,7 @@
     
 <!--    <p style="margin: -18px 0px 20px 1px;font-size: 12px;">預計四點開票</p>-->
 
-    <p style="margin: -18px 0px 20px 1px;font-size: 12px;">更新時間<span id="r_time"></span></p>
+    <p style="margin: -18px 0px 20px 1px;font-size: 12px;">更新時間: 18:38:54<span id="r_time"></span></p>
 
     <p class="subtitle"><span>依投票率排列</span>
     </p>
@@ -89,11 +89,11 @@
         var url = 'https://iflin.github.io/ks_data/running_area.json?ts=' + (new Date()).getTime();
 
         //抓更新時間        
-        function getnewtime() {
-            var d = new Date();
-            var h = d.toLocaleTimeString();
-            document.getElementById("r_time").innerHTML = h;
-        }
+//        function getnewtime() {
+//            var d = new Date();
+//            var h = d.toLocaleTimeString();
+//            document.getElementById("r_time").innerHTML = h;
+//        }
 
         //取頁面寬度
         var width = Math.max(document.body.scrollHeight, document.body.offsetWidth);

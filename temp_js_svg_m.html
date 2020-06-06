@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <title>Untitled Document</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script>
+<!--     <script>
         //reload
         function myrefresh() {
             window.location.reload();
         }
         setTimeout('myrefresh()', 25000) //設定reload秒數(毫秒)
-    </script>
+    </script> -->
 
 </head>
 
@@ -27,7 +27,7 @@
 
 <!--                 <p id="agree_threshold">預計四點開票</p>-->
 
-                <p id="agree_threshold" style="margin: 0px 0px -10px 0px;">更新時間<span id="r_time"></span></p>
+                <p id="agree_threshold" style="margin: 0px 0px -10px 0px;">更新時間: 18:38:54<span id="r_time"></span></p>
 
             </div>
 
@@ -97,11 +97,11 @@
                 var url_1 = "https://iflin.github.io/ks_data/running_all_bar.json?ts="+ (new Date()).getTime();
 
         //抓更新時間        
-        function getnewtime() {
-            var d = new Date();
-            var h = d.toLocaleTimeString();
-            document.getElementById("r_time").innerHTML = h;
-        }
+//        function getnewtime() {
+//            var d = new Date();
+//            var h = d.toLocaleTimeString();
+//            document.getElementById("r_time").innerHTML = h;
+//        }
 
 
         //取頁面寬度
