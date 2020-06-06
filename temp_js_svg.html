@@ -66,6 +66,7 @@
                 <div>
                     <p class="thr_title">門檻二</p>
                     <p class="thr_text">同意票數超過<br>選舉人總數的25%<br>(57萬4996)</p>
+                    
                 </div>
 
                 <!--                <div>通過/沒通過</div>-->
@@ -85,7 +86,7 @@
             </div>
 
         </div>
-        <p style="font-size:10px; font-weight: 300;margin-top:0px;">資料來源：高雄市選委會</p>
+        <p style="font-size:10px; font-weight: 300;margin-top:0px;">資料來源：高雄市選委會｜最終罷免結果以中選會公告為準</p>
     </div>
 
     <script>
@@ -133,9 +134,11 @@
                 });
         })
 
+      //長條圖
+        
         d3.json("https://iflin.github.io/ks_data_test/running_all_bar.json", function(data) {
 
-            //長條圖
+    
             d3.select('#svg')
                 .selectAll()
                 .data(data)
@@ -208,8 +211,21 @@
             //                .attr('x', '56')
             //                .attr('y', '64');
 
-            //門檻是否通過的
-
+                                //門檻線
+                      d3.select('#svg')
+//                        .selectAll()
+//                        .data(data)
+//                        .enter()
+                        .append('line')
+                        .attr('x1', (574996 / 5000000 * width))
+                        .attr('y1', '50')
+                        .attr('x2 ', (574996 / 5000000 * width))
+                        .attr('y2', '100')
+            .attr("stroke","black")
+.attr("stroke-width",2);
+            
+            
+        
 
         });
     </script>
