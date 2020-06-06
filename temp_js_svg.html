@@ -25,9 +25,9 @@
                 <p id="agree_tks"></p>
 
 
-                <!-- <p id="agree_threshold">通過門檻：57萬4983</p>-->
+<!--                 <p id="agree_threshold">預計四點開票</p>-->
 
-                <p id="agree_threshold" style="margin: 0px 0px -10px 0px;">更新時間<span id="r_time"></span></p>
+                <p id="agree_threshold" style="margin: 0px 0px -10px 0px;">預計四點開票｜更新時間<span id="r_time"></span></p>
 
             </div>
 
@@ -105,9 +105,9 @@
         console.log(width);
 
         //D3
-        d3.json(url, function(data) {
+//        d3.json(url, function(data) {
 
-            //                    d3.json("running_all.json", function(data) {
+                                d3.json("running_all.json", function(data) {
 
             console.log(data);
 
@@ -118,9 +118,11 @@
                 .enter()
                 .append("p")
                 .text(
-                    d => d.agreeTks > 10000 ? Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000) :
+                    d => 
+                    d.agreeTks > 10000 ? Math.floor(d.agreeTks / 10000) + "萬" + (d.agreeTks - Math.floor(d.agreeTks / 10000) * 10000) :
+                
                     d.agreeTks < 10000 ? d.agreeTks : d.agreeTks
-                )
+                )      
 
                 .transition()
                 .duration(2500)
