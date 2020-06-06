@@ -175,7 +175,7 @@
                 .append('rect')
                 .style('fill', d => d.color)
                 .attr('height', '40')
-                .attr('x', '74')
+                .attr('x', '84')
                 .attr('y', d => 33 + 50 * (d.no - 1))
                 .transition()
                 .duration(2500)
@@ -193,7 +193,7 @@
                 .text(d => d.tks)
                 .attr('class', 'tks')
                 .style('font-size', '14px')
-                .attr('x', '76')
+                .attr('x', '86')
                 .attr('y', d => 60 + 50 * (d.no - 1))
                 .transition()
                 .duration(2500)
@@ -224,8 +224,8 @@
             d3.select('#svg')
                 .append("path")
                 .attr("d", line([
-                    [(574996 / 5000000 * width + 74), 30],
-                    [(574996 / 5000000 * width + 74), 126]
+                    [(574996 / 5000000 * width + 84), 30],
+                    [(574996 / 5000000 * width + 84), 126]
                 ]))
                 .attr("stroke", "black")
                 .attr("stroke-dasharray", "5,5")
@@ -243,8 +243,8 @@
             d3.select('#svg')
                 .append("path")
                 .attr("d", line([
-                    [74, 30],
-                    [74, 126]
+                    [84, 30],
+                    [84, 126]
                 ]))
                 .attr("stroke", "grey")
                 .attr("stroke-width", "0.5px")
