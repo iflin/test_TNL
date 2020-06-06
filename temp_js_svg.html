@@ -213,19 +213,29 @@
             //                .attr('x', '56')
             //                .attr('y', '64');
 
-                                //門檻線
-                      d3.select('#svg')
-//                        .selectAll()
-//                        .data(data)
-//                        .enter()
-                        .append('line')
-                        .attr('x1', (574996 / 5000000 * width))
-                        .attr('y1', '50')
-                        .attr('x2 ', (574996 / 5000000 * width))
-                        .attr('y2', '100')
-            .attr("stroke","black")
-.attr("stroke-width",2);
-            
+            //門檻線
+
+            var line = d3.line();
+
+            d3.select('#svg')
+                .append("path")
+                .attr("d", line([
+                    [(574996 / 5000000 * width + 74), 30],
+                    [(574996 / 5000000 * width + 74), 126]
+                ]))
+                .attr("stroke", "black")
+                .attr("stroke-dasharray", "5,5")
+                .attr("stroke-width", "1px")
+                .attr("fill", "none");
+
+            d3.select('#svg')
+                .append("text")
+                .text("57萬4996")
+                .attr('x', [574996 / 5000000 * width + 40])
+                .attr('y', '142')
+                .attr('fill', '#313131')
+                .style('font-size', '14px')
+
             
         
 
